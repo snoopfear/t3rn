@@ -54,5 +54,5 @@ echo
 echo "Starting the Executor..."
 ./executor
 
-rm t3rn.sh
+rm tern.sh
 echo "Setup complete! The Executor is now running."
