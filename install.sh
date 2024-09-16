@@ -54,5 +54,4 @@ echo
 echo "Starting the Executor..."
 ./executor
 
-rm tern.sh
 echo "Setup complete! The Executor is now running."
