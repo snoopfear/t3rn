@@ -42,14 +42,17 @@ export PRIVATE_KEY_LOCAL=$PRIVATE_KEY_LOCAL
 echo -e "\nPrivate key has been set."
 echo
 
-export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,optimism-sepolia,blast-sepolia,l1rn'
+export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,l1rn'
 echo "Enabled Networks set to: $ENABLED_NETWORKS"
 echo
 
-export EXECUTOR_ARBITRUM_SEPOLIA_RPC_URLS='https://arb-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1'
-export EXECUTOR_OPTIMISM_SEPOLIA_RPC_URLS='https://opt-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1'
-export EXECUTOR_BASE_SEPOLIA_RPC_URLS='https://base-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1'
-export EXECUTOR_BLAST_SEPOLIA_RPC_URLS='https://blast-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1'
+#export EXECUTOR_ARBITRUM_SEPOLIA_RPC_URLS='https://arb-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1'
+#export EXECUTOR_OPTIMISM_SEPOLIA_RPC_URLS='https://opt-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1'
+#export EXECUTOR_BASE_SEPOLIA_RPC_URLS='https://base-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1'
+#export EXECUTOR_BLAST_SEPOLIA_RPC_URLS='https://blast-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1'
 
 echo "Starting the Executor..."
 ./executor
+
+rm t3rn.sh
+echo "Setup complete! The Executor is now running."
