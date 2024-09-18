@@ -42,7 +42,7 @@ export PRIVATE_KEY_LOCAL=$PRIVATE_KEY_LOCAL
 echo -e "\nPrivate key has been set."
 echo
 
-export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,l1rn'
+export ENABLED_NETWORKS='arbitrum-sepolia,optimism-sepolia,blast-sepolia,base-sepolia,l1rn'
 echo "Enabled Networks set to: $ENABLED_NETWORKS"
 echo
 
