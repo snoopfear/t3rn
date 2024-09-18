@@ -4,7 +4,7 @@
 echo "Welcome to the t3rn Executor Setup by snoopfear!"
 
 cd $HOME
-rm -rf executor
+rm -rf ~/executor
 sudo apt -q update
 sudo apt -qy upgrade
 
