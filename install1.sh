@@ -7,8 +7,11 @@ echo "Installing ccze for colored log formatting..."
 sudo apt -q update
 sudo apt -qy install ccze
 
-# Запрос ввода приватного ключа
-read -p "Enter your Private Key from Metamask: " PRIVATE_KEY_LOCAL
+# Проверка на существование переменной PRIVATE_KEY_LOCAL
+if [ -z "$PRIVATE_KEY_LOCAL" ]; then
+    # Запрос ввода приватного ключа
+    read -p "Enter your Private Key from Metamask: " PRIVATE_KEY_LOCAL
+fi
 
 # Переход в домашнюю директорию
 cd $HOME
