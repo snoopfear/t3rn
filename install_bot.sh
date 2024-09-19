@@ -25,7 +25,7 @@ nvm install node
 # Клонирование репозитория
 echo "Cloning the repository..."
 git clone https://github.com/snoopfear/t3rn-airdrop-bot.git
-cd t3rn-airdrop-bot || exit
+cd t3rn-airdrop-bot
 
 # Установка зависимостей
 echo "Installing dependencies..."
