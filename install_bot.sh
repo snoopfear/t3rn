@@ -61,6 +61,9 @@ echo "3. Run Optimism task: npm run opsp"
 echo "4. Use Screen to manage the bot session: screen -S bot"
 echo "5. Edit the privateKeys.json file: nano privateKeys.json"
 
+# Переход в папку t3rn-airdrop-bot (хотя мы уже в ней)
+cd t3rn-airdrop-bot || { echo "Failed to change directory. Exiting."; exit 1; }
+
 # Открытие файла privateKeys.json в редакторе nano
 echo "Opening privateKeys.json for editing..."
 nano privateKeys.json
