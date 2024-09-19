@@ -22,14 +22,26 @@ export NVM_DIR="$HOME/.nvm"
 echo "Installing the latest version of Node.js and npm..."
 nvm install node
 
+# Проверка установки Node.js и npm
+echo "Checking Node.js and npm versions..."
+node -v
+npm -v
+
 # Клонирование репозитория
 echo "Cloning the repository..."
-git clone https://github.com/snoopfear/t3rn-airdrop-bot.git
-cd t3rn-airdrop-bot
+git clone https://github.com/snoopfear/t3rn-airdrop-bot.git || { echo "Failed to clone repository. Exiting."; exit 1; }
+
+# Переход в директорию
+if [ -d "t3rn-airdrop-bot" ]; then
+    cd t3rn-airdrop-bot || { echo "Failed to change directory. Exiting."; exit 1; }
+else
+    echo "Directory t3rn-airdrop-bot does not exist. Exiting."
+    exit 1
+fi
 
 # Установка зависимостей
 echo "Installing dependencies..."
-npm install
+npm install || { echo "Failed to install dependencies. Exiting."; exit 1; }
 
 # Создание файла privateKeys.json
 echo "Creating privateKeys.json file..."
@@ -40,7 +52,7 @@ cat <<EOF > privateKeys.json
 EOF
 
 # Полезные команды
-echo "Setup complete! The bot is now running."
+echo "Setup complete! The bot is now ready."
 
 echo "Useful commands to manage the bot:"
 echo "1. Start the bot: npm start"
@@ -48,3 +60,7 @@ echo "2. Run Arbitrum task: npm run arbt"
 echo "3. Run Optimism task: npm run opsp"
 echo "4. Use Screen to manage the bot session: screen -S bot"
 echo "5. Edit the privateKeys.json file: nano privateKeys.json"
+
+# Открытие файла privateKeys.json в редакторе nano
+echo "Opening privateKeys.json for editing..."
+nano privateKeys.json
