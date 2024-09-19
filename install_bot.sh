@@ -7,8 +7,11 @@ echo "Updating package list and installing necessary packages..."
 sudo apt -q update
 sudo apt -qy install git curl build-essential
 
-# Запрос ввода приватного ключа
-read -p "Enter your Private Key from Metamask: " PRIVATE_KEY_LOCAL
+# Проверка на существование переменной PRIVATE_KEY_LOCAL
+if [ -z "$PRIVATE_KEY_LOCAL" ]; then
+    # Запрос ввода приватного ключа
+    read -p "Enter your Private Key from Metamask: " PRIVATE_KEY_LOCAL
+fi
 
 # Установка nvm (Node Version Manager)
 echo "Installing nvm (Node Version Manager)..."
