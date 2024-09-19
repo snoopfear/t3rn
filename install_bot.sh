@@ -8,9 +8,13 @@ sudo apt -q update
 sudo apt -qy install git curl build-essential
 
 # Проверка на существование переменной PRIVATE_KEY_LOCAL
-if [ -z "$PRIVATE_KEY_LOCAL" ]; then
+if [ -z "${PRIVATE_KEY_LOCAL}" ]; then
     # Запрос ввода приватного ключа
     read -p "Enter your Private Key from Metamask: " PRIVATE_KEY_LOCAL
+    # Экспорт переменной
+    export PRIVATE_KEY_LOCAL
+else
+    echo "Using existing PRIVATE_KEY_LOCAL: $PRIVATE_KEY_LOCAL"
 fi
 
 # Установка nvm (Node Version Manager)
