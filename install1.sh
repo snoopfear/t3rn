@@ -13,6 +13,9 @@ if [ -z "${PRIVATE_KEY_LOCAL}" ]; then
     read -p "Enter your Private Key from Metamask: " PRIVATE_KEY_LOCAL
     # Экспорт переменной
     export PRIVATE_KEY_LOCAL
+    
+    # Сохранение переменной в .bashrc для постоянного использования
+    echo "export PRIVATE_KEY_LOCAL=\"$PRIVATE_KEY_LOCAL\"" >> ~/.bashrc
 else
     echo "Using existing PRIVATE_KEY_LOCAL: $PRIVATE_KEY_LOCAL"
 fi
