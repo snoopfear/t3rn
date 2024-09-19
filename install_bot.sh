@@ -5,20 +5,22 @@ echo "Welcome to the t3rn Bot Setup by snoopfear!"
 # Установка необходимых пакетов
 echo "Updating package list and installing necessary packages..."
 sudo apt -q update
-sudo apt -qy install git curl
+sudo apt -qy install git curl build-essential
 
 # Запрос ввода приватного ключа
 read -p "Enter your Private Key from Metamask: " PRIVATE_KEY_LOCAL
 
-# Установка Node.js и npm
-echo "Installing Node.js (v14 or later) and npm (v6 or later)..."
-curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-sudo apt -qy install nodejs
+# Установка nvm (Node Version Manager)
+echo "Installing nvm (Node Version Manager)..."
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
 
-# Проверка установки Node.js и npm
-echo "Checking Node.js and npm versions..."
-node -v
-npm -v
+# Загрузка nvm в текущую сессию
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Установка последней версии Node.js и npm
+echo "Installing the latest version of Node.js and npm..."
+nvm install node
 
 # Клонирование репозитория
 echo "Cloning the repository..."
