@@ -76,10 +76,10 @@ Environment="LOG_LEVEL=debug"
 Environment="LOG_PRETTY=false"
 Environment="PRIVATE_KEY_LOCAL=$PRIVATE_KEY_LOCAL"
 Environment="ENABLED_NETWORKS=arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l1rn"
-Environment="EXECUTOR_ARBITRUM_SEPOLIA_RPC_URLS=https://arb-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"
-Environment="EXECUTOR_OPTIMISM_SEPOLIA_RPC_URLS=https://opt-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"
-Environment="EXECUTOR_BASE_SEPOLIA_RPC_URLS=https://base-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"
-Environment="EXECUTOR_BLAST_SEPOLIA_RPC_URLS=https://blast-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"
+Environment="RPC_ENDPOINTS_ARBT=https://arb-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"
+Environment="RPC_ENDPOINTS_OPSP=https://opt-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"
+Environment="RPC_ENDPOINTS_BSSP=https://base-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"
+Environment="RPC_ENDPOINTS_BLSS=https://blast-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"
 
 Restart=always
 RestartSec=5
