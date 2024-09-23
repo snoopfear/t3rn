@@ -59,7 +59,7 @@ EOF
 sudo chmod +x /usr/local/bin/restart_executor.sh
 
 # Добавление cron-задания для выполнения каждые 15 минут
-(crontab -l 2>/dev/null; echo "*/15 * * * * sh /usr/local/bin/restart_executor.sh") | crontab -
+(crontab -l 2>/dev/null; echo "*/30 * * * * sh /usr/local/bin/restart_executor.sh") | crontab -
 
 echo "Cron job to restart the executor every 15 minutes has been created."
 
