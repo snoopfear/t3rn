@@ -30,7 +30,7 @@ rm -rf ~/executor
 sudo apt -qy upgrade
 
 # Указание ссылки для загрузки и имени файла
-EXECUTOR_URL="https://github.com/t3rn/executor-release/releases/download/v0.21.1/executor-linux-v0.21.1.tar.gz"
+EXECUTOR_URL="https://github.com/t3rn/executor-release/releases/download/v0.21.1/executor-linux-v0.21.4.tar.gz"
 EXECUTOR_FILE="executor-linux-v0.21.1.tar.gz"
 
 echo "Downloading the Executor binary from $EXECUTOR_URL..."
