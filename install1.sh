@@ -76,10 +76,10 @@ Environment="LOG_LEVEL=debug"
 Environment="LOG_PRETTY=false"
 Environment="PRIVATE_KEY_LOCAL=$PRIVATE_KEY_LOCAL"
 Environment="ENABLED_NETWORKS=arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l1rn"
-Environment="RPC_ENDPOINTS_ARBT=https://rpc.ankr.com/arbitrum_sepolia/d52e9aed12d3e5eb1570d715d18bba7f60fdc942dd48df6e494e6bc00844e37c"
-Environment="RPC_ENDPOINTS_OPSP=https://rpc.ankr.com/optimism_sepolia/d52e9aed12d3e5eb1570d715d18bba7f60fdc942dd48df6e494e6bc00844e37c"
-Environment="RPC_ENDPOINTS_BSSP=https://rpc.ankr.com/base_sepolia/d52e9aed12d3e5eb1570d715d18bba7f60fdc942dd48df6e494e6bc00844e37c"
-Environment="RPC_ENDPOINTS_BLSS=https://rpc.ankr.com/blast_testnet_sepolia/d52e9aed12d3e5eb1570d715d18bba7f60fdc942dd48df6e494e6bc00844e37c"
+#Environment="RPC_ENDPOINTS_ARBT=https://rpc.ankr.com/arbitrum_sepolia/d52e9aed12d3e5eb1570d715d18bba7f60fdc942dd48df6e494e6bc00844e37c"
+#Environment="RPC_ENDPOINTS_OPSP=https://rpc.ankr.com/optimism_sepolia/d52e9aed12d3e5eb1570d715d18bba7f60fdc942dd48df6e494e6bc00844e37c"
+#Environment="RPC_ENDPOINTS_BSSP=https://rpc.ankr.com/base_sepolia/d52e9aed12d3e5eb1570d715d18bba7f60fdc942dd48df6e494e6bc00844e37c"
+#Environment="RPC_ENDPOINTS_BLSS=https://rpc.ankr.com/blast_testnet_sepolia/d52e9aed12d3e5eb1570d715d18bba7f60fdc942dd48df6e494e6bc00844e37c"
 
 Restart=always
 RestartSec=5
