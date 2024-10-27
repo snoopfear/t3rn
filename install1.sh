@@ -59,7 +59,7 @@ EOF
 sudo chmod +x /usr/local/bin/restart_executor.sh
 
 # Добавление cron-задания для выполнения каждые 15 минут
-(crontab -l 2>/dev/null; echo "*/30 * * * * sh /usr/local/bin/restart_executor.sh") | crontab -
+(crontab -l 2>/dev/null; echo "0 */2 * * * sh /usr/local/bin/restart_executor.sh") | crontab -
 
 echo "Cron job to restart the executor every 15 minutes has been created."
 
@@ -94,8 +94,8 @@ sudo systemctl daemon-reload
 
 # Включение и запуск сервиса
 sudo systemctl enable executor.service
-sudo systemctl start executor.service
+
 
 # Показ последних 100 строк журнала и непрерывное обновление с ccze
-echo "Displaying the last 100 lines of the 'executor' service log and following updates with ccze formatting..."
-journalctl -n 100 -f -u executor | ccze -A
+echo "sudo systemctl start executor"
+echo "journalctl -n 100 -f -u executor | ccze -A"
