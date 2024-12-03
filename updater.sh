@@ -35,5 +35,5 @@ tar -xzvf $EXECUTOR_FILE
 # Удаление архива после распаковки
 rm -rf $EXECUTOR_FILE
 
-sudo systemctl restart executor"
+sudo systemctl restart executor
 journalctl -n 100 -f -u executor | ccze -A
