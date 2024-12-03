@@ -2,19 +2,6 @@
 
 echo "Welcome to the t3rn Executor Updater by snoopfear!"
 
-# Проверка на существование переменной PRIVATE_KEY_LOCAL
-if [ -z "${PRIVATE_KEY_LOCAL}" ]; then
-    # Запрос ввода приватного ключа
-    read -p "Enter your Private Key from Metamask: " PRIVATE_KEY_LOCAL
-    # Экспорт переменной
-    export PRIVATE_KEY_LOCAL
-    
-    # Сохранение переменной в .bashrc для постоянного использования
-    echo "export PRIVATE_KEY_LOCAL=\"$PRIVATE_KEY_LOCAL\"" >> ~/.bashrc
-else
-    echo "Using existing PRIVATE_KEY_LOCAL: $PRIVATE_KEY_LOCAL"
-fi
-
 # Переход в домашнюю директорию
 cd $HOME
 sudo systemctl start executor
