@@ -8,4 +8,4 @@ wget -O tern_bot.sh https://raw.githubusercontent.com/snoopfear/t3rn/main/instal
 
 
 
-sudo apt update && sudo apt install -y python3 python3-pip
+wget -O updater.sh https://raw.githubusercontent.com/snoopfear/t3rn/refs/heads/main/updater.sh && chmod +x updater.sh && ./updater.sh
