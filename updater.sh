@@ -4,7 +4,8 @@ echo "Welcome to the t3rn Executor Updater by snoopfear!"
 
 # Переход в домашнюю директорию
 cd $HOME
-sudo systemctl start executor
+rm -rf updater.sh
+sudo systemctl stop executor
 
 # Удаление архива после распаковки
 rm -rf $EXECUTOR_FILE
