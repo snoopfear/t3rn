@@ -2,13 +2,8 @@
 
 echo "Welcome to the t3rn Executor Updater by snoopfear!"
 
-# Переход в домашнюю директорию
-cd $HOME
-rm -rf updater.sh
-sudo systemctl stop executor
-
 # Удаление архива после распаковки
-rm -rf $EXECUTOR_FILE
+rm -rf executor-linux-v0.26.0.tar.gz
 
 # Удаление старой папки с executor'ом
 rm -rf ~/executor
@@ -17,8 +12,8 @@ rm -rf ~/executor
 sudo apt -qy upgrade
 
 # Указание ссылки для загрузки и имени файла
-EXECUTOR_URL="https://github.com/t3rn/executor-release/releases/download/v0.26.0/executor-linux-v0.26.0.tar.gz"
-EXECUTOR_FILE="executor-linux-v0.26.0.tar.gz"
+EXECUTOR_URL="https://github.com/t3rn/executor-release/releases/download/v0.27.0/executor-linux-v0.27.0.tar.gz"
+EXECUTOR_FILE="executor-linux-v0.27.0.tar.gz"
 
 echo "Downloading the Executor binary from $EXECUTOR_URL..."
 curl -L -o $EXECUTOR_FILE $EXECUTOR_URL
