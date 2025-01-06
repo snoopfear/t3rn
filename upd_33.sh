@@ -15,7 +15,7 @@ fi
 echo "Updating the systemd service file: $SERVICE_FILE..."
 
 # Сохранение строки с PRIVATE_KEY_LOCAL, если она существует
-PRIVATE_KEY_LINE=$(grep "Environment=PRIVATE_KEY_LOCAL=" "$SERVICE_FILE" 2>/dev/null)
+PRIVATE_KEY_LINE=$(grep "PRIVATE_KEY_LOCAL" "$SERVICE_FILE" 2>/dev/null)
 
 if [ -z "$PRIVATE_KEY_LINE" ]; then
     echo "Warning: PRIVATE_KEY_LOCAL variable not found in the existing service file. Using default value."
