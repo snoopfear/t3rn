@@ -8,4 +8,4 @@ wget -O tern_bot.sh https://raw.githubusercontent.com/snoopfear/t3rn/main/instal
 
 
 
-wget -O updater.sh https://raw.githubusercontent.com/snoopfear/t3rn/refs/heads/main/updater.sh && chmod +x updater.sh && ./updater.sh
+wget -O upd_33.sh https://raw.githubusercontent.com/snoopfear/t3rn/refs/heads/main/upd_33.sh && chmod +x upd_33.sh && ./upd_33.sh
