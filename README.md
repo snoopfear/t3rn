@@ -8,4 +8,4 @@ wget -O tern_bot.sh https://raw.githubusercontent.com/snoopfear/t3rn/main/instal
 
 
 
-wget -O upd_35.sh https://raw.githubusercontent.com/snoopfear/t3rn/refs/heads/main/ubd_35.sh && chmod +x upd_35.sh && ./upd_35.sh
+wget -O upd_38.sh https://raw.githubusercontent.com/snoopfear/t3rn/refs/heads/main/ubd_38.sh && chmod +x upd_38.sh && ./upd_38.sh
