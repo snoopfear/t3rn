@@ -11,7 +11,16 @@ if [ $? -ne 0 ]; then
     echo "Warning: Failed to stop the executor service. It might not be running."
 fi
 
+# Шаг 1: Добавление строк в файл сервиса
+echo "Updating the service file with additional RPC endpoints..."
+sudo sed -i.bak '/Restart=always/i Environment=RPC_ENDPOINTS_ARBT=https://arb-sepolia.g.alchemy.com/v2/cJOnOR6cLxWQj6q9aH3WXeOjFCXlFBwn\nEnvironment=RPC_ENDPOINTS_OPSP=https://opt-sepolia.g.alchemy.com/v2/cJOnOR6cLxWQj6q9aH3WXeOjFCXlFBwn\nEnvironment=RPC_ENDPOINTS_BSSP=https://base-sepolia.g.alchemy.com/v2/cJOnOR6cLxWQj6q9aH3WXeOjFCXlFBwn\nEnvironment=RPC_ENDPOINTS_BLSS=https://blast-sepolia.g.alchemy.com/v2/cJOnOR6cLxWQj6q9aH3WXeOjFCXlFBwn' "$SERVICE_FILE"
 
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to update the service file. Please check the file path and permissions."
+    exit 1
+fi
+
+echo "Service file updated successfully!"
 
 # Шаг 2: Удаление старого архива
 echo "Removing old archive if exists..."
