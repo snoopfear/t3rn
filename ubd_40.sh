@@ -11,17 +11,6 @@ if [ $? -ne 0 ]; then
     echo "Warning: Failed to stop the executor service. It might not be running."
 fi
 
-# Шаг 1: Добавление строк в файл сервиса
-echo "Updating the service file with additional RPC endpoints..."
-sudo sed -i.bak '/Restart=always/i Environment=RPC_ENDPOINTS_ARBT=https://arb-sepolia.g.alchemy.com/v2/cJOnOR6cLxWQj6q9aH3WXeOjFCXlFBwn\nEnvironment=RPC_ENDPOINTS_OPSP=https://opt-sepolia.g.alchemy.com/v2/cJOnOR6cLxWQj6q9aH3WXeOjFCXlFBwn\nEnvironment=RPC_ENDPOINTS_BSSP=https://base-sepolia.g.alchemy.com/v2/cJOnOR6cLxWQj6q9aH3WXeOjFCXlFBwn\nEnvironment=RPC_ENDPOINTS_BLSS=https://blast-sepolia.g.alchemy.com/v2/cJOnOR6cLxWQj6q9aH3WXeOjFCXlFBwn' "$SERVICE_FILE"
-
-if [ $? -ne 0 ]; then
-    echo "Error: Failed to update the service file. Please check the file path and permissions."
-    exit 1
-fi
-
-echo "Service file updated successfully!"
-
 # Шаг 2: Удаление старого архива
 echo "Removing old archive if exists..."
 rm -rf executor-linux-v*.tar.gz
@@ -35,8 +24,8 @@ echo "Updating and upgrading system packages..."
 sudo apt update && sudo apt -qy upgrade
 
 # Шаг 5: Указание ссылки для загрузки и имени файла
-EXECUTOR_URL="https://github.com/t3rn/executor-release/releases/download/v0.40.0/executor-linux-v0.40.0.tar.gz"
-EXECUTOR_FILE="executor-linux-v0.40.0.tar.gz"
+EXECUTOR_URL="https://github.com/t3rn/executor-release/releases/download/v0.42.0/executor-linux-v0.42.0.tar.gz"
+EXECUTOR_FILE="executor-linux-v0.42.0.tar.gz"
 
 echo "Downloading the Executor binary from $EXECUTOR_URL..."
 curl -L -o $EXECUTOR_FILE $EXECUTOR_URL
