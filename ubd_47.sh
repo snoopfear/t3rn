@@ -24,8 +24,8 @@ echo "Updating and upgrading system packages..."
 sudo apt update && sudo apt -qy upgrade
 
 # Шаг 5: Указание ссылки для загрузки и имени файла
-EXECUTOR_URL="https://github.com/t3rn/executor-release/releases/download/v0.42.0/executor-linux-v0.42.0.tar.gz"
-EXECUTOR_FILE="executor-linux-v0.42.0.tar.gz"
+EXECUTOR_URL="https://github.com/t3rn/executor-release/releases/download/v0.47.0/executor-linux-v0.47.0.tar.gz"
+EXECUTOR_FILE="executor-linux-v0.47.0.tar.gz"
 
 echo "Downloading the Executor binary from $EXECUTOR_URL..."
 curl -L -o $EXECUTOR_FILE $EXECUTOR_URL
