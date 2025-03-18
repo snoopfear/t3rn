@@ -1,52 +1,80 @@
 #!/bin/bash
 
-
 echo "Welcome to the t3rn Executor Setup by snoopfear!"
 
-cd $HOME
-rm -rf ~/executor
+# Установка ccze для цветного форматирования логов
+echo "Installing ccze for colored log formatting..."
 sudo apt -q update
-sudo apt -qy upgrade
+sudo apt -qy install ccze
 
-EXECUTOR_URL="https://github.com/t3rn/executor-release/releases/download/v0.21.0/executor-linux-v0.21.0.tar.gz"
-EXECUTOR_FILE="executor-linux-v0.21.0.tar.gz"
-
-echo "Downloading the Executor binary from $EXECUTOR_URL..."
-curl -L -o $EXECUTOR_FILE $EXECUTOR_URL
-
-if [ $? -ne 0 ]; then
-    echo "Failed to download the Executor binary. Please check your internet connection and try again."
-    exit 1
+# Проверка на существование переменной PRIVATE_KEY_LOCAL
+if [ -z "${PRIVATE_KEY_LOCAL}" ]; then
+    # Запрос ввода приватного ключа
+    read -p "Enter your Private Key from Metamask: " PRIVATE_KEY_LOCAL
+    # Экспорт переменной
+    export PRIVATE_KEY_LOCAL
+    
+    # Сохранение переменной в .bashrc для постоянного использования
+    echo "export PRIVATE_KEY_LOCAL=\"$PRIVATE_KEY_LOCAL\"" >> ~/.bashrc
+else
+    echo "Using existing PRIVATE_KEY_LOCAL: $PRIVATE_KEY_LOCAL"
 fi
 
-echo "Extracting the binary..."
-tar -xzvf $EXECUTOR_FILE
-rm -rf $EXECUTOR_FILE
-cd executor/executor/bin
+# Переход в домашнюю директорию
+cd $HOME
 
-echo "Binary downloaded and extracted successfully."
-echo
+# Удаление старой папки с executor'ом
+rm -rf ~/executor
 
+# Обновление и улучшение пакетов
+sudo apt -qy upgrade
 
-export NODE_ENV=testnet
-echo "Node Environment set to: testnet"
-echo
+# Скачать последнюю версию Executor
+LATEST_VERSION=$(curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | grep -Po '"tag_name": "\K.*?(?=")')
+wget https://github.com/t3rn/executor-release/releases/download/$LATEST_VERSION/executor-linux-$LATEST_VERSION.tar.gz
 
-export LOG_LEVEL=debug
-export LOG_PRETTY=false
-echo "Log settings configured: LOG_LEVEL=$LOG_LEVEL, LOG_PRETTY=$LOG_PRETTY"
-echo
+# Распаковка архива
+mkdir -p ~/executor
+tar -xzf executor-linux-*.tar.gz -C ~/executor
+rm -rf executor-linux-*.tar.gz
 
-read -p "Enter your Private Key from Metamask: " PRIVATE_KEY_LOCAL
-export PRIVATE_KEY_LOCAL=$PRIVATE_KEY_LOCAL
-echo -e "\nPrivate key has been set."
-echo
+# Создание systemd сервиса для t3rn Executor
+sudo tee /etc/systemd/system/executor.service > /dev/null <<EOF
+[Unit]
+Description=t3rn Executor Service
+After=network.target
 
-export ENABLED_NETWORKS='arbitrum-sepolia,optimism-sepolia,blast-sepolia,base-sepolia,l1rn'
-echo "Enabled Networks set to: $ENABLED_NETWORKS"
-echo
+[Service]
+ExecStart=$HOME/executor/bin/executor
+Environment="ENVIRONMENT=testnet"
+Environment="LOG_LEVEL=debug"
+Environment="LOG_PRETTY=false"
+Environment="PRIVATE_KEY_LOCAL=$PRIVATE_KEY_LOCAL"
+Environment="EXECUTOR_PROCESS_BIDS_ENABLED=true"
+Environment="EXECUTOR_PROCESS_ORDERS_ENABLED=true"
+Environment="EXECUTOR_PROCESS_CLAIMS_ENABLED=true"
+Environment="EXECUTOR_MAX_L3_GAS_PRICE=1000"
+Environment="ENABLED_NETWORKS=arbitrum-sepolia,optimism-sepolia,l1rn,base-sepolia,unichain-sepolia"
+Environment="RPC_ENDPOINTS={\
+    \"l2rn\": [\"https://b2n.rpc.caldera.xyz/http\"],\
+    \"arbt\": [\"https://arbitrum-sepolia.drpc.org\", \"https://sepolia-rollup.arbitrum.io/rpc\", \"https://arb-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1\"],\
+    \"bast\": [\"https://base-sepolia-rpc.publicnode.com\", \"https://base-sepolia.drpc.org\", \"https://base-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1\"],\
+    \"opst\": [\"https://sepolia.optimism.io\", \"https://optimism-sepolia.drpc.org\", \"https://opt-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1\"],\
+    \"unit\": [\"https://unichain-sepolia.drpc.org\", \"https://sepolia.unichain.org\", \"https://unichain-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1\"]\
+}"
+Restart=always
+RestartSec=5
 
-echo "Starting the Executor..."
-./executor
+[Install]
+WantedBy=multi-user.target
+EOF
 
-echo "Setup complete! The Executor is now running."
+# Перезагрузка systemd для применения изменений
+sudo systemctl daemon-reload
+
+# Включение и запуск сервиса
+sudo systemctl enable executor.service
+sudo systemctl start executor.service
+
+# Показ последних 100 строк журнала и непрерывное обновление с ccze
+echo "journalctl -n 100 -f -u executor | ccze -A"
