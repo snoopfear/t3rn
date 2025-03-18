@@ -60,10 +60,10 @@ Environment="ENABLED_NETWORKS=arbitrum-sepolia,optimism-sepolia,l1rn,base-sepoli
 #Environment="EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=true"
 Environment="RPC_ENDPOINTS='{
     "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
-    "arbt": ["https://arbitrum-sepolia.drpc.org", "https://sepolia-rollup.arbitrum.io/rpc"],
-    "bast": ["https://base-sepolia-rpc.publicnode.com", "https://base-sepolia.drpc.org"],
-    "opst": ["https://sepolia.optimism.io", "https://optimism-sepolia.drpc.org"],
-    "unit": ["https://unichain-sepolia.drpc.org", "https://sepolia.unichain.org"]
+    "arbt": ["https://arbitrum-sepolia.drpc.org", "https://sepolia-rollup.arbitrum.io/rpc", "https://arb-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"],
+    "bast": ["https://base-sepolia-rpc.publicnode.com", "https://base-sepolia.drpc.org", "https://base-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"],
+    "opst": ["https://sepolia.optimism.io", "https://optimism-sepolia.drpc.org", "https://opt-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"],
+    "unit": ["https://unichain-sepolia.drpc.org", "https://sepolia.unichain.org", "https://unichain-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"]
 }'"
 
 Restart=always
