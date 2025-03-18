@@ -45,7 +45,7 @@ Description=t3rn Executor Service
 After=network.target
 
 [Service]
-ExecStart=$HOME/executor/bin/executor
+ExecStart=$HOME/executor/executor/executor/bin/executor
 Environment="ENVIRONMENT=testnet"
 Environment="LOG_LEVEL=debug"
 Environment="LOG_PRETTY=false"
