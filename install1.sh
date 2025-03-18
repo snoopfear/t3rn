@@ -29,39 +29,16 @@ rm -rf ~/executor
 # Обновление и улучшение пакетов
 sudo apt -qy upgrade
 
-# Указание ссылки для загрузки и имени файла
-EXECUTOR_URL="https://github.com/t3rn/executor-release/releases/download/v0.26.0/executor-linux-v0.26.0.tar.gz"
-EXECUTOR_FILE="executor-linux-v0.26.0.tar.gz"
+# Download latest release
+curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | \
+grep -Po '"tag_name": "\K.*?(?=")' | \
+xargs -I {} wget https://github.com/t3rn/executor-release/releases/download/{}/executor-linux-{}.tar.gz
 
-echo "Downloading the Executor binary from $EXECUTOR_URL..."
-curl -L -o $EXECUTOR_FILE $EXECUTOR_URL
-
-# Проверка успешности загрузки
-if [ $? -ne 0 ]; then
-    echo "Failed to download the Executor binary. Please check your internet connection and try again."
-    exit 1
-fi
-
-echo "Extracting the binary..."
-tar -xzvf $EXECUTOR_FILE
+# Extract the archive
+tar -xzf executor-linux-*.tar.gz
 
 # Удаление архива после распаковки
-rm -rf $EXECUTOR_FILE
-
-# Создание скрипта restart_executor.sh
-sudo tee /usr/local/bin/restart_executor.sh > /dev/null <<EOF
-#!/bin/bash
-systemctl restart executor.service
-echo "Cron job executed at \$(date)" >> /tmp/cron_test.log
-EOF
-
-# Сделать скрипт исполняемым
-sudo chmod +x /usr/local/bin/restart_executor.sh
-
-# Добавление cron-задания для выполнения каждые 15 минут
-(crontab -l 2>/dev/null; echo "0 */2 * * * sh /usr/local/bin/restart_executor.sh") | crontab -
-
-echo "Cron job to restart the executor every 15 minutes has been created."
+rm -rf executor-linux-*.tar.gz
 
 # Создание systemd сервиса для t3rn Executor
 sudo tee /etc/systemd/system/executor.service > /dev/null <<EOF
@@ -71,16 +48,23 @@ After=network.target
 
 [Service]
 ExecStart=/root/executor/executor/bin/executor  # Полный путь к бинарному файлу
-Environment="NODE_ENV=testnet"
+Environment="ENVIRONMENT=testnet"
 Environment="LOG_LEVEL=debug"
 Environment="LOG_PRETTY=false"
 Environment="PRIVATE_KEY_LOCAL=$PRIVATE_KEY_LOCAL"
-Environment="ENABLED_NETWORKS=arbitrum-sepolia,optimism-sepolia,l1rn,base-sepolia,blast-sepolia"
-#Environment="RPC_ENDPOINTS_ARBT=https://rpc.ankr.com/arbitrum_sepolia/3f5b31bf26186c6e7a8cb38c86d1c876cfb0c3f300a26f86c0faab3bef50d2f2"
-#Environment="RPC_ENDPOINTS_OPSP=https://rpc.ankr.com/optimism_sepolia/3f5b31bf26186c6e7a8cb38c86d1c876cfb0c3f300a26f86c0faab3bef50d2f2"
-#Environment="RPC_ENDPOINTS_BSSP=https://rpc.ankr.com/base_sepolia/3f5b31bf26186c6e7a8cb38c86d1c876cfb0c3f300a26f86c0faab3bef50d2f2"
-#Environment="RPC_ENDPOINTS_BLSS=https://rpc.ankr.com/blast_testnet_sepolia/3f5b31bf26186c6e7a8cb38c86d1c876cfb0c3f300a26f86c0faab3bef50d2f2"
-
+Environment="EXECUTOR_PROCESS_BIDS_ENABLED=true
+Environment="EXECUTOR_PROCESS_ORDERS_ENABLED=true
+Environment="EXECUTOR_PROCESS_CLAIMS_ENABLED=true
+Environment="EXECUTOR_MAX_L3_GAS_PRICE=1000
+Environment="ENABLED_NETWORKS=arbitrum-sepolia,optimism-sepolia,l1rn,base-sepolia,unichain-sepolia"
+#Environment="EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=true"
+Environment="RPC_ENDPOINTS='{
+    "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
+    "arbt": ["https://arbitrum-sepolia.drpc.org", "https://sepolia-rollup.arbitrum.io/rpc"],
+    "bast": ["https://base-sepolia-rpc.publicnode.com", "https://base-sepolia.drpc.org"],
+    "opst": ["https://sepolia.optimism.io", "https://optimism-sepolia.drpc.org"],
+    "unit": ["https://unichain-sepolia.drpc.org", "https://sepolia.unichain.org"]
+}'"
 
 Restart=always
 RestartSec=5
