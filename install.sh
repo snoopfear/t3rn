@@ -34,8 +34,7 @@ LATEST_VERSION=$(curl -s https://api.github.com/repos/t3rn/executor-release/rele
 wget https://github.com/t3rn/executor-release/releases/download/$LATEST_VERSION/executor-linux-$LATEST_VERSION.tar.gz
 
 # Распаковка архива
-mkdir -p ~/executor
-tar -xzf executor-linux-*.tar.gz -C ~/executor
+tar -xzvf executor-linux-$LATEST_VERSION.tar.gz
 rm -rf executor-linux-*.tar.gz
 
 # Создание systemd сервиса для t3rn Executor
@@ -45,7 +44,7 @@ Description=t3rn Executor Service
 After=network.target
 
 [Service]
-ExecStart=$HOME/executor/executor/executor/bin/executor
+ExecStart=$HOME/executor/executor/bin/executor
 Environment="ENVIRONMENT=testnet"
 Environment="LOG_LEVEL=debug"
 Environment="LOG_PRETTY=false"
