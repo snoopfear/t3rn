@@ -58,25 +58,28 @@ Description=t3rn Executor Service
 After=network.target
 
 [Service]
-ExecStart=/root/executor/executor/bin/executor  # Полный путь к бинарному файлу
+ExecStart=$HOME/executor/executor/bin/executor
 Environment="ENVIRONMENT=testnet"
 Environment="LOG_LEVEL=debug"
 Environment="LOG_PRETTY=false"
 Environment="PRIVATE_KEY_LOCAL=$PRIVATE_KEY_LOCAL"
-Environment="EXECUTOR_PROCESS_BIDS_ENABLED=true
-Environment="EXECUTOR_PROCESS_ORDERS_ENABLED=true
-Environment="EXECUTOR_PROCESS_CLAIMS_ENABLED=true
-Environment="EXECUTOR_MAX_L3_GAS_PRICE=1000
+Environment="EXECUTOR_PROCESS_BIDS_ENABLED=true"
+Environment="EXECUTOR_PROCESS_ORDERS_ENABLED=true"
+Environment="EXECUTOR_PROCESS_CLAIMS_ENABLED=true"
+Environment="EXECUTOR_MAX_L3_GAS_PRICE=10000"
+Environment="EXECUTOR_ENABLE_BATCH_BIDING=true"
+Environment="EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false"
+Environment="EXECUTOR_PROCESS_ORDERS_API_ENABLED=false"
+Environment="EXECUTOR_PROCESS_BIDS_API_ENABLED=false"
+Environment="EXECUTOR_PROCESS_CLAIMS_API_ENABLED=false"
 Environment="ENABLED_NETWORKS=arbitrum-sepolia,optimism-sepolia,l1rn,base-sepolia,unichain-sepolia"
-#Environment="EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=true"
-Environment="RPC_ENDPOINTS='{
-    "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
-    "arbt": ["https://arbitrum-sepolia.drpc.org", "https://sepolia-rollup.arbitrum.io/rpc", "https://arb-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"],
-    "bast": ["https://base-sepolia-rpc.publicnode.com", "https://base-sepolia.drpc.org", "https://base-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"],
-    "opst": ["https://sepolia.optimism.io", "https://optimism-sepolia.drpc.org", "https://opt-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"],
-    "unit": ["https://unichain-sepolia.drpc.org", "https://sepolia.unichain.org", "https://unichain-sepolia.g.alchemy.com/v2/lNTUkf8We6CAI3gpMaBGyPsSz7bRk2U1"]
-}'"
-
+Environment="RPC_ENDPOINTS={\
+    \"l2rn\": [\"https://b2n.rpc.caldera.xyz/http\"],\
+    \"arbt\": [\"https://arbitrum-sepolia.drpc.org\", \"https://sepolia-rollup.arbitrum.io/rpc\", \"https://arb-sepolia.g.alchemy.com/v2/$APIKEY\"],\
+    \"bast\": [\"https://base-sepolia-rpc.publicnode.com\", \"https://base-sepolia.drpc.org\", \"https://base-sepolia.g.alchemy.com/v2/$APIKEY\"],\
+    \"opst\": [\"https://sepolia.optimism.io\", \"https://optimism-sepolia.drpc.org\", \"https://opt-sepolia.g.alchemy.com/v2/$APIKEY\"],\
+    \"unit\": [\"https://unichain-sepolia.drpc.org\", \"https://sepolia.unichain.org\", \"https://unichain-sepolia.g.alchemy.com/v2/$APIKEY\"]\
+}"
 Restart=always
 RestartSec=5
 
@@ -89,8 +92,7 @@ sudo systemctl daemon-reload
 
 # Включение и запуск сервиса
 sudo systemctl enable executor.service
-
+sudo systemctl start executor.service
 
 # Показ последних 100 строк журнала и непрерывное обновление с ccze
-echo "sudo systemctl start executor"
 echo "journalctl -n 100 -f -u executor | ccze -A"
