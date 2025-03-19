@@ -7,6 +7,11 @@ echo "Installing ccze for colored log formatting..."
 sudo apt -q update
 sudo apt -qy install ccze
 
+# Запрос API Key
+read -p "Enter your API Key: " APIKEY
+export APIKEY
+echo "export APIKEY=\"$APIKEY\"" >> ~/.bashrc
+
 # Проверка на существование переменной PRIVATE_KEY_LOCAL
 if [ -z "${PRIVATE_KEY_LOCAL}" ]; then
     # Запрос ввода приватного ключа
