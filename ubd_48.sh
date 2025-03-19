@@ -1,64 +1,50 @@
 #!/bin/bash
 
+set -e  # Выход при ошибках
+
 echo "Welcome to the t3rn Executor Updater by snoopfear!"
 
 SERVICE_FILE="/etc/systemd/system/executor.service"
 
 # Шаг 0: Остановка сервиса executor
 echo "Stopping the executor service..."
-sudo systemctl stop executor
-if [ $? -ne 0 ]; then
-    echo "Warning: Failed to stop the executor service. It might not be running."
-fi
+sudo systemctl stop executor || echo "Warning: Failed to stop the executor service. It might not be running."
 
-# Шаг 2: Удаление старого архива
-echo "Removing old archive if exists..."
-rm -rf executor-linux-v*.tar.gz
+# Шаг 1: Удаление старого архива и папки с executor'ом
+echo "Removing old archive and executor directory..."
+rm -rf executor-linux-v*.tar.gz ~/executor
 
-# Шаг 3: Удаление старой папки с executor'ом
-echo "Removing old executor directory if exists..."
-rm -rf ~/executor
-
-# Шаг 4: Обновление и улучшение пакетов
+# Шаг 2: Обновление и улучшение пакетов
 echo "Updating and upgrading system packages..."
 sudo apt update && sudo apt -qy upgrade
 
-# Шаг 5: Указание ссылки для загрузки и имени файла
-EXECUTOR_URL="https://github.com/t3rn/executor-release/releases/download/v0.48.0/executor-linux-v0.48.0.tar.gz"
-EXECUTOR_FILE="executor-linux-v0.48.0.tar.gz"
-
-echo "Downloading the Executor binary from $EXECUTOR_URL..."
-curl -L -o $EXECUTOR_FILE $EXECUTOR_URL
-
-# Проверка успешности загрузки
-if [ $? -ne 0 ]; then
-    echo "Error: Failed to download the Executor binary. Please check your internet connection and try again."
+# Шаг 3: Получение URL последнего релиза
+LATEST_RELEASE_URL=$(curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | grep "browser_download_url" | grep "executor-linux" | cut -d '"' -f 4)
+if [[ -z "$LATEST_RELEASE_URL" ]]; then
+    echo "Error: Failed to fetch the latest release URL. Check the repository or your internet connection."
     exit 1
 fi
 
-# Шаг 6: Распаковка бинарного файла
+EXECUTOR_FILE=$(basename "$LATEST_RELEASE_URL")
+
+# Шаг 4: Загрузка последнего релиза
+echo "Downloading the latest Executor binary from $LATEST_RELEASE_URL..."
+curl -L -o "$EXECUTOR_FILE" "$LATEST_RELEASE_URL"
+
+# Шаг 5: Распаковка бинарного файла
 echo "Extracting the binary..."
-tar -xzvf $EXECUTOR_FILE
-if [ $? -ne 0 ]; then
-    echo "Error: Failed to extract the binary. Please check the archive and try again."
-    exit 1
-fi
+tar -xzvf "$EXECUTOR_FILE"
 
-# Шаг 7: Удаление архива после распаковки
+# Шаг 6: Удаление архива после распаковки
 echo "Cleaning up: removing downloaded archive..."
-rm -rf $EXECUTOR_FILE
+rm -rf "$EXECUTOR_FILE"
 
-# Шаг 8: Перезапуск systemd и активация сервиса
+# Шаг 7: Перезапуск systemd и активация сервиса
 echo "Reloading systemd daemon and restarting the executor service..."
 sudo systemctl daemon-reload
 sudo systemctl enable executor
-sudo systemctl restart executor
+sudo systemctl restart executor || { echo "Error: Failed to restart the executor service. Check service logs."; exit 1; }
 
-if [ $? -ne 0 ]; then
-    echo "Error: Failed to restart the executor service. Please check the service configuration."
-    exit 1
-fi
-
-# Шаг 9: Просмотр логов сервиса
+# Шаг 8: Просмотр логов сервиса
 echo "Showing the last 100 lines of logs for the executor service..."
 journalctl -n 100 -f -u executor | ccze -A
