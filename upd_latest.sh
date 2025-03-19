@@ -18,18 +18,19 @@ rm -rf executor-linux-v*.tar.gz ~/executor
 echo "Updating and upgrading system packages..."
 sudo apt update && sudo apt -qy upgrade
 
-# Шаг 3: Получение URL последнего релиза
-LATEST_RELEASE_URL=$(curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | grep "browser_download_url" | grep "executor-linux" | cut -d '"' -f 4)
-if [[ -z "$LATEST_RELEASE_URL" ]]; then
-    echo "Error: Failed to fetch the latest release URL. Check the repository or your internet connection."
+# Получаем последнюю версию
+LATEST_VERSION=$(curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | grep -Po '"tag_name": "\K.*?(?=")')
+EXECUTOR_FILE="executor-linux-$LATEST_VERSION.tar.gz"
+EXECUTOR_URL="https://github.com/t3rn/executor-release/releases/download/$LATEST_VERSION/$EXECUTOR_FILE"
+
+echo "Downloading Executor from $EXECUTOR_URL..."
+curl -L -o "$EXECUTOR_FILE" "$EXECUTOR_URL"
+
+# Проверяем успешность загрузки
+if [ ! -f "$EXECUTOR_FILE" ]; then
+    echo "Error: Failed to download $EXECUTOR_FILE. Exiting..."
     exit 1
 fi
-
-EXECUTOR_FILE=$(basename "$LATEST_RELEASE_URL")
-
-# Шаг 4: Загрузка последнего релиза
-echo "Downloading the latest Executor binary from $LATEST_RELEASE_URL..."
-curl -L -o "$EXECUTOR_FILE" "$LATEST_RELEASE_URL"
 
 # Шаг 5: Распаковка бинарного файла
 echo "Extracting the binary..."
