@@ -9,7 +9,7 @@ wget -O tern1.sh https://raw.githubusercontent.com/snoopfear/t3rn/refs/heads/mai
 
 NON API 53
 
-wget -O tern_install.sh https://raw.githubusercontent.com/snoopfear/t3rn/refs/heads/main/install_nonapi_53.sh && chmod +x install_nonapi_53.sh && ./install_nonapi_53.sh
+wget -O install_nonapi_53.sh https://raw.githubusercontent.com/snoopfear/t3rn/refs/heads/main/install_nonapi_53.sh && chmod +x install_nonapi_53.sh && ./install_nonapi_53.sh
 
 
 UPD
