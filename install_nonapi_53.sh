@@ -34,13 +34,27 @@ rm -rf ~/executor
 # Обновление и улучшение пакетов
 sudo apt -qy upgrade
 
-# Скачать последнюю версию Executor
-LATEST_VERSION=$(curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | grep -Po '"tag_name": "\K.*?(?=")')
-wget https://github.com/t3rn/executor-release/releases/download/$LATEST_VERSION/executor-linux-$LATEST_VERSION.tar.gz
+# Получаем последнюю версию
+LATEST_VERSION="v0.53.1"
+EXECUTOR_FILE="executor-linux-$LATEST_VERSION.tar.gz"
+EXECUTOR_URL="https://github.com/t3rn/executor-release/releases/download/$LATEST_VERSION/$EXECUTOR_FILE"
 
-# Распаковка архива
-tar -xzvf executor-linux-$LATEST_VERSION.tar.gz
-rm -rf executor-linux-*.tar.gz
+echo "Downloading Executor from $EXECUTOR_URL..."
+curl -L -o "$EXECUTOR_FILE" "$EXECUTOR_URL"
+
+# Проверяем успешность загрузки
+if [ ! -f "$EXECUTOR_FILE" ]; then
+    echo "Error: Failed to download $EXECUTOR_FILE. Exiting..."
+    exit 1
+fi
+
+# Шаг 5: Распаковка бинарного файла
+echo "Extracting the binary..."
+tar -xzvf "$EXECUTOR_FILE"
+
+# Шаг 6: Удаление архива после распаковки
+echo "Cleaning up: removing downloaded archive..."
+rm -rf "$EXECUTOR_FILE"
 
 # Создание systemd сервиса для t3rn Executor
 sudo tee /etc/systemd/system/executor.service > /dev/null <<EOF
