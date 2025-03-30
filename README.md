@@ -10,6 +10,7 @@ wget -O tern1.sh https://raw.githubusercontent.com/snoopfear/t3rn/refs/heads/mai
 
 
 UPD
+
 wget -O upd_latest.sh https://raw.githubusercontent.com/snoopfear/t3rn/refs/heads/main/upd_latest.sh && chmod +x upd_latest.sh && ./upd_latest.sh
 
 wget -O upd_53.1.sh https://raw.githubusercontent.com/snoopfear/t3rn/refs/heads/main/upd_53.1.sh && chmod +x upd_53.1.sh && ./upd_53.1.sh
