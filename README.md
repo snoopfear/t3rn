@@ -7,6 +7,9 @@ wget -O tern_install.sh https://raw.githubusercontent.com/snoopfear/t3rn/refs/he
 
 wget -O tern1.sh https://raw.githubusercontent.com/snoopfear/t3rn/refs/heads/main/install_%24.sh && chmod +x tern1.sh && ./tern1.sh
 
+NON API 53
+
+wget -O tern_install.sh https://raw.githubusercontent.com/snoopfear/t3rn/refs/heads/main/install_nonapi_53.sh && chmod +x install_nonapi_53.sh && ./install_nonapi_53.sh
 
 
 UPD
