@@ -77,6 +77,7 @@ Environment="EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false"
 Environment="EXECUTOR_PROCESS_ORDERS_API_ENABLED=false"
 Environment="EXECUTOR_PROCESS_BIDS_API_ENABLED=false"
 Environment="EXECUTOR_PROCESS_CLAIMS_API_ENABLED=false"
+Environment="NETWORKS_DISABLED=blast-sepolia"
 Environment="ENABLED_NETWORKS=arbitrum-sepolia,optimism-sepolia,l1rn,base-sepolia,unichain-sepolia"
 Environment="RPC_ENDPOINTS={\
     \\"l2rn\\": [\\"https://t3rn-b2n.blockpi.network/v1/rpc/public\\", \\"https://b2n.rpc.caldera.xyz/http\\"],\
