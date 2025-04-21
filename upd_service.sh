@@ -38,4 +38,4 @@ RestartSec=5
 [Install]
 WantedBy=multi-user.target
 EOF
-&& sudo systemctl daemon-reexec && sudo systemctl daemon-reload && sudo systemctl enable executor && sudo systemctl restart executor
+&& sudo systemctl daemon-reexec && sudo systemctl daemon-reload && sudo systemctl enable executor && sudo systemctl restart executor && journalctl -n 100 -f -u executor | ccze -A
