@@ -30,7 +30,7 @@ import os
 RPC_URL = "https://sepolia.optimism.io"
 
 # Переменные окружения
-PRIVATE_KEY = os.getenv('PRIVATE_KEY_LOCAL')
+PRIVATE_KEY = $PRIVATE_KEY_LOCAL
 
 # Проверка на наличие приватника
 if PRIVATE_KEY is None:
