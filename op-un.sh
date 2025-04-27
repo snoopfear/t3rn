@@ -46,7 +46,7 @@ if not web3.is_connected():
 SENDER_ADDRESS = web3.eth.account.from_key(PRIVATE_KEY).address
 
 # TO_ADDRESS = SENDER_ADDRESS
-TO_ADDRESS = SENDER_ADDRESS
+TO_ADDRESS = '0xb6Def636914Ae60173d9007E732684a9eEDEF26E'
 
 # Массив transaction_data
 transaction_data_list = [
