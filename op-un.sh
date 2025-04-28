@@ -123,7 +123,7 @@ print(f"BASE: {successful_base}")
 EOF
 
 echo "✅ Установка завершена."
-cd ~/op-uni
+echo "cd ~/op-uni"
 echo "Запустить скрипт: python3 main.py"
 echo "screen -S op-un"
 echo "nano main.py"
