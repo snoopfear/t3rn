@@ -125,3 +125,6 @@ EOF
 echo "✅ Установка завершена."
 echo "Перейти в папку проекта: cd ~/op-uni"
 echo "Запустить скрипт: python3 main.py"
+
+cd ~/op-uni
+nano main.py
