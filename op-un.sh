@@ -127,4 +127,5 @@ echo "Перейти в папку проекта: cd ~/op-uni"
 echo "Запустить скрипт: python3 main.py"
 
 cd ~/op-uni
+screen -S op-un
 nano main.py
