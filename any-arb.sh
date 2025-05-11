@@ -3,9 +3,6 @@
 # Подгружаем переменные окружения
 source ~/.bashrc
 
-echo "Установка необходимых библиотек..."
-pip3 install web3 tqdm
-
 echo "Создание папки проекта..."
 mkdir -p ~/any-arb
 cd ~/any-arb
@@ -42,7 +39,7 @@ TX_DATAS = {
 CHAIN_IDS = {
     'opt': 11155420,
     'base': 84532,
-    'uni': 11155420,
+    'uni': 1301,
 }
 
 BALANCE_LIMIT = 0.1
