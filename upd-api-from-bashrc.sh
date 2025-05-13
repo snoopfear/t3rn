@@ -3,11 +3,6 @@
 # Запрос нового APIKEY у пользователя
 read -p "🔐 Введите новый APIKEY (28 символов): " NEW_APIKEY
 
-if [[ ! "$NEW_APIKEY" =~ ^[a-zA-Z0-9]{28}$ ]]; then
-  echo "❌ Неверный формат APIKEY"
-  exit 1
-fi
-
 # Обновляем или добавляем APIKEY в ~/.bashrc
 if grep -q 'APIKEY=' ~/.bashrc; then
   sed -i -E "s@export APIKEY=\"[^\"]*\"@export APIKEY=\"$NEW_APIKEY\"@" ~/.bashrc
