@@ -18,10 +18,8 @@ sed -i -E "s@(g\.alchemy\.com/v2/)[a-zA-Z0-9]{28}@\1$APIKEY@g" "$SERVICE_FILE"
 echo "✅ Ключ успешно обновлен в $SERVICE_FILE"
 
 # Перезагрузка systemd, если нужно:
-read -p "🔁 Перезапустить systemd-юнит executor.service? [y/N] " answer
-if [[ "$answer" =~ ^[Yy]$ ]]; then
+
   systemctl daemon-reexec
   systemctl daemon-reload
   systemctl restart executor.service
-  echo "🚀 executor.service перезапущен"
-fi
+  journalctl -n 100 -f -u executor | ccze -A
