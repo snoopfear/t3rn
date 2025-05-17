@@ -9,6 +9,8 @@ fi
 
 SERVICE_FILE="/etc/systemd/system/executor.service"
 
+source ~/.bashrc
+
 # Замена ключа до символа \
 sed -i -E "s@(g\.alchemy\.com/v2/)[^\\]+@\\1$NEW_APIKEY@g" "$SERVICE_FILE"
 
