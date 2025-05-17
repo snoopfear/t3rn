@@ -8,16 +8,27 @@ if [[ -z "$NEW_APIKEY" ]]; then
 fi
 
 SERVICE_FILE="/etc/systemd/system/executor.service"
+BASHRC="$HOME/.bashrc"
 
-source ~/.bashrc
+# 📝 Обновим или добавим переменную APIKEY в .bashrc
+if grep -q "^export APIKEY=" "$BASHRC"; then
+  sed -i "s/^export APIKEY=.*/export APIKEY=$NEW_APIKEY/" "$BASHRC"
+else
+  echo "export APIKEY=$NEW_APIKEY" >> "$BASHRC"
+fi
 
-# Замена ключа до символа \
-sed -i -E "s@(g\.alchemy\.com/v2/)[^\\]+@\\1$NEW_APIKEY@g" "$SERVICE_FILE"
+# 🛠 Загрузим обновлённый .bashrc
+source "$BASHRC"
 
-echo "✅ Ключ успешно обновлён в $SERVICE_FILE"
+# 🔧 Обновим APIKEY в unit-файле (если используется в RPC URL)
+sed -i -E "s@(g\.alchemy\.com/v2/)[^\\\" ]+@\1$NEW_APIKEY@g" "$SERVICE_FILE"
 
+echo "✅ Ключ обновлён в .bashrc и $SERVICE_FILE"
+
+# 🔄 Перезапустим сервис
 systemctl daemon-reexec
 systemctl daemon-reload
 systemctl restart executor.service
 
+# 📋 Покажем логи
 journalctl -n 100 -f -u executor | ccze -A
