@@ -29,6 +29,7 @@ echo "✅ Ключ обновлён в .bashrc и $SERVICE_FILE"
 systemctl daemon-reexec
 systemctl daemon-reload
 systemctl restart executor.service
+systemctl restart any-arb.service
 
 # 📋 Покажем логи
-journalctl -n 100 -f -u executor | ccze -A
+journalctl -u any-arb.service -f | ccze -A
