@@ -8,6 +8,7 @@ if [[ -z "$NEW_APIKEY" ]]; then
 fi
 
 SERVICE_FILE="/etc/systemd/system/executor.service"
+ANY_ARB_FILE="/etc/systemd/system/any-arb.service"
 BASHRC="$HOME/.bashrc"
 
 # 📝 Обновим или добавим переменную APIKEY в .bashrc
@@ -20,12 +21,20 @@ fi
 # 🛠 Загрузим обновлённый .bashrc
 source "$BASHRC"
 
-# 🔧 Обновим APIKEY в unit-файле (если используется в RPC URL)
+# 🔧 Обновим APIKEY в executor.service (например, в RPC URL)
 sed -i -E "s@(g\.alchemy\.com/v2/)[^\\\" ]+@\1$NEW_APIKEY@g" "$SERVICE_FILE"
 
-echo "✅ Ключ обновлён в .bashrc и $SERVICE_FILE"
+# 🔧 Обновим переменную APIKEY в any-arb.service
+if grep -q "^Environment=APIKEY=" "$ANY_ARB_FILE"; then
+  sed -i "s|^Environment=APIKEY=.*|Environment=APIKEY=$NEW_APIKEY|" "$ANY_ARB_FILE"
+else
+  # Вставим переменную под секцией [Service], если её не было
+  sed -i "/^\[Service\]/a Environment=APIKEY=$NEW_APIKEY" "$ANY_ARB_FILE"
+fi
 
-# 🔄 Перезапустим сервис
+echo "✅ Ключ обновлён в .bashrc, $SERVICE_FILE и $ANY_ARB_FILE"
+
+# 🔄 Перезапустим сервисы
 systemctl daemon-reexec
 systemctl daemon-reload
 systemctl restart executor.service
